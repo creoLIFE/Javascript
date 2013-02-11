@@ -1,5 +1,5 @@
 /**
- * creo contentSlider
+ * creo.slider
  * @version 1.0
  * @copyright creoLIFE.pl 2006-2013
  * @author Mirek Ratman
@@ -18,13 +18,13 @@ if( typeof creo === 'undefined' ){
  */
 if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
 
-	creo.contentSlider = creo.prototype = {
+	creo.slider = creo.prototype = {
 
 		/*
 		 * @description Object with global params and varibles
 		 */
 		conf : {
-			thisId                   : '.creoContentSlider',
+			thisId                   : '.creoSlider',
             repeat                   : true,
             autoScrollInterval       : 10,
             fitWidth                 : true,
@@ -35,8 +35,8 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                 inActive    : 'inactive'
             },
             ids : {
-                slides      : '.creoContentSliderSlides',
-                menu        : '.creoContentSliderMenu',
+                slides      : '.creoSliderSlides',
+                menu        : '.creoSliderMenu',
                 menuEl      : 'a'
             }
 		},
@@ -51,7 +51,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
          */
         create : function( el, options){
             //Create shorthands
-            var conf = creo.contentSlider.conf;
+            var conf = creo.slider.conf;
 
             //Check if slider tag was given or exists
             if( typeof el !== 'undefined' ){
@@ -68,9 +68,6 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                 }
             }
 
-            //creo.contentSlider.conf = options;
-            $.extend(true, creo.contentSlider.conf, options);
-
             //Set local varibles
             var slideToPosition     = 0;
             var slideMaxHeight      = 0;
@@ -78,24 +75,24 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
             var initSlidesWidth     = $(el).width();
 
             //Set auto scroll interval from param
-            if( creo.contentSlider.getHashParams('interval', true) ){
-                conf.autoScrollInterval = creo.contentSlider.getHashParams('interval');
+            if( creo.slider.getHashParams('interval', true) ){
+                conf.autoScrollInterval = creo.slider.getHashParams('interval');
             }
 
             //Create autoscroll interval
             if( conf.autoScrollInterval > 0 ){
-                creo.contentSlider.startAutoScroll();
+                creo.slider.startAutoScroll();
             }
 
             $( conf.thisId )
                 //attach mouse over,mouseout on main area to pause/renew autosliding
                 .children( conf.ids.slides )
                     .on('mouseover', function(){
-                        creo.contentSlider.stopAutoScroll();
+                        creo.slider.stopAutoScroll();
                     })
                     .on('mouseout', function(){
                         if( conf.autoScrollInterval > 0 ){
-                            creo.contentSlider.startAutoScroll();
+                            creo.slider.startAutoScroll();
                         }
                     })
                     .end()
@@ -156,7 +153,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                            
                             //Cancel autoscrolling under click on button
                             if( !doScroll ){
-                                creo.contentSlider.stopAutoScroll();
+                                creo.slider.stopAutoScroll();
                             } 
 
                             //Prevent execute click
@@ -171,7 +168,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
          */
         startAutoScroll : function(){
             //Create shorthands
-            var conf = creo.contentSlider.conf;
+            var conf = creo.slider.conf;
 
             //do autoscroll
             var fScroll = function(){
@@ -203,7 +200,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
          */
         stopAutoScroll : function(){
             //Create shorthands
-            var conf = creo.contentSlider.conf;
+            var conf = creo.slider.conf;
 
             clearInterval( conf.pAutoScroll );
         },
@@ -252,13 +249,16 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
     /** 
      * Method will create jQuery shorthand method
      * @method creoSlider
-     * @param object options - configuration object for creo.contentSlider
+     * @param object options - configuration object for creo.slider
      */
 	jQuery.fn.creoSlider = function( options ){
         //check if given object exists
         if( $(this).length > 0 ){
+             //creo.slider.conf = options;
+            $.extend(true, creo.slider.conf, options);
+
             //lunch gmaps
-            creo.contentSlider.create( $(this), options );
+            creo.slider.create( $(this), options );
         }
 	};
 }

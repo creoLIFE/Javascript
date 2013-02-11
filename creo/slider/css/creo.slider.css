@@ -1,0 +1,14 @@
+.creoSlider{ text-align:center; padding:0; margin:0 auto; border:1px solid white; background:url(../img/panel.jpg) repeat-x bottom center #ffffff; overflow:hidden; -moz-box-shadow:0 0 3px #AAAAAA; -webkit-box-shadow:0 0 3px #AAAAAA;	box-shadow:0 0 3px #AAAAAA;	-moz-border-radius-bottomleft:4px; -webkit-border-bottom-left-radius:4px; border-bottom-left-radius:4px; -moz-border-radius-bottomright:4px; -webkit-border-bottom-right-radius:4px; border-bottom-right-radius:4px;}
+.creoSliderSlides{ width:100%; overflow:hidden;}
+	.creoSliderSlides div {height:100px;float:left;}
+.creoSliderMenu { height:45px;}
+	.creoSliderMenu ul {list-style:none; margin:0 auto;}
+	.creoSliderMenu ul li { width:60px; margin:0; padding:0; display:inline-block; list-style:none; height:45px; overflow:hidden;}
+	.creoSliderMenu ul li:hover{ background:url(../img/pic_bg.png) repeat;}
+	.creoSliderMenu ul li.active,li.active:hover{ background:url(../img/active_bg.png) no-repeat;}
+		.creoSliderBlack .creoSliderMenu li.active,li.active:hover{ background:url(../img/active_bg_black.png) no-repeat;}
+		.creoSliderDarkbrown .creoSliderMenu li.active,li.active:hover{ background:url(../img/active_bg_darkbrown.png) no-repeat;}
+	.creoSliderMenu ul li a {display:block; margin:0 2px 0 5px; text-decoration:none; font:bold 12px/14px arial, tahoma; color:#888; outline:none;}
+	.creoSliderMenu ul li a:hover {color:#000;}
+	.creoSliderMenu ul li a span {margin-top:17px; width:100%; display:block; }
+	.creoSliderMenu ul li a img {margin:0 auto;}
