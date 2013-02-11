@@ -11,5 +11,5 @@ Menu
 
 
 
-
+Note:
 All brand and product names and associated logos contained within this projects belong to their respective owners and are protected by copyright.
