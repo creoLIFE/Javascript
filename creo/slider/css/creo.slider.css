@@ -2,7 +2,7 @@
 .creoSliderSlides{ width:100%; overflow:hidden;}
 	.creoSliderSlides div {height:100px;float:left;}
 .creoSliderMenu { height:45px;}
-	.creoSliderMenu ul {list-style:none; margin:0 auto;}
+	.creoSliderMenu ul {list-style:none; margin:0 auto; padding:0;}
 	.creoSliderMenu ul li { width:60px; margin:0; padding:0; display:inline-block; list-style:none; height:45px; overflow:hidden;}
 	.creoSliderMenu ul li:hover{ background:url(../img/pic_bg.png) repeat;}
 	.creoSliderMenu ul li.active,li.active:hover{ background:url(../img/active_bg.png) no-repeat;}
