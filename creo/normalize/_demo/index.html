@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>creoLIFE normalize</title>
+
+    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../creo/js/creo.js"></script>
+    <script type="text/javascript" src="../js/creo.normalize.js"></script>
+
+    <style>
+        body {background:#f2f2f2}
+        .list ul {list-style:none; overflow:hidden;}
+        .list li {border:1px solid #ccc; float:left; margin:10px; padding:10px;}
+    </style>
+
+</head>
+<body>
+
+<div>
+    <div class="list list1">
+        <ul>
+            <li>test test test test test test<br/>test test<br/></li>
+            <li>test test<br/></li>
+            <li>test test<br/>test test<br/>test test<br/></li>
+            <li>test test<br/>test test<br/>test test<br/>test test<br/></li>
+        </ul>
+    </div>
+    <div class="list list2">
+        <ul>
+            <li>test test test test test test<br/>test test<br/></li>
+            <li>test test<br/></li>
+            <li>test test<br/>test test<br/>test test<br/></li>
+            <li>test test<br/>test test<br/>test test<br/>test test<br/></li>
+        </ul>
+    </div>
+    <div class="list list3">
+        <ul>
+            <li>test test test test test test<br/>test test<br/></li>
+            <li>test test<br/></li>
+            <li>test test<br/>test test<br/>test test<br/></li>
+            <li>test test<br/>test test<br/>test test<br/>test test<br/></li>
+        </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('.list1 li').creoNormalize(['height','width']);
+    $('.list2 li').creoNormalize(['height','width'], false, 5000);
+    $('.list3 li').creoNormalize('height');
+</script>
+</body>
+</html>
