@@ -4,7 +4,7 @@
  * @copyright creoLIFE.pl 2006-2013
  * @author Mirek Ratman
  * @namespace creo
- * @since 2013-02-11
+ * @since 2014-01-08
  * @requires [jQuery]
  */
 
@@ -24,7 +24,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
 		 * @description Object with global params and varibles
 		 */
 		conf : {
-            iframeMode      : true,
+            iframeMode      : false,
             htmlBoxIdPrefix : 'creoHtmlBox_',
             content : {
                 forceWidth  : false,
@@ -32,7 +32,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
             },
             btn : {
                 close : {
-                    topFix  : 12,
+                    topFix  : 10,
                     leftFix : -10
                 }
             }
@@ -61,6 +61,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                         .addClass('creoHtmlBoxBg')
                         .on('click', function(){
                             creo.htmlBox.hide( conf.htmlBoxIdPrefix + htmlBoxIdHash );
+                            return false;
                         })
                 )
                 .append(
@@ -68,31 +69,27 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                         .hide()
                         .attr('id', conf.htmlBoxIdPrefix + htmlBoxIdHash)
                         .addClass('creoHtmlBox')
+                        .addClass('creoHtmlBoxContentProgress')
+                        .css({
+                            width   : 60,
+                            height  : 60
+                        })
                         .append(
                             $('<div>')
                                 .addClass('creoHtmlBoxContent')
-                                .css( 
-                                    {
-                                        width : function(){
-                                            return conf.content.forceWidth ? conf.content.forceWidth : false;
-                                        },
-                                        height : function(){
-                                            return conf.content.forceHeight ? conf.content.forceheight : false;
-                                        }
-                                    }
-                                )
                                 .append( function(){
                                     if( conf.iframeMode === true ){
                                         var iframe = $('<iframe>')
                                                             .hide()
                                                             .addClass('creoHtmlBoxIframe')
-                                                            .attr('id',conf.htmlBoxIdPrefix + htmlBoxIdHash + '_iframe')
-                                                            .on('load', function(){
-                                                                creo.htmlBox.show( conf.htmlBoxIdPrefix + htmlBoxIdHash );
-                                                            })
+                                                            .attr('id',conf.htmlBoxIdPrefix + htmlBoxIdHash + '_iframe');
                                         //Append data to iframe if exists
                                         if( content.substring(0,4) === 'http' ){
-                                            iframe.attr('src', content);
+                                            iframe
+                                                .attr('src', content)
+                                                .on('load', function(){
+                                                    creo.htmlBox.show( id, conf.htmlBoxIdPrefix + htmlBoxIdHash );
+                                                });
                                         }
                                         if( content.substring(0,4) !== 'http' ){
                                             setTimeout( function() {
@@ -119,6 +116,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                         .attr('id', conf.htmlBoxIdPrefix + htmlBoxIdHash + '_btn_close')
                         .on('click', function(){
                             creo.htmlBox.hide( conf.htmlBoxIdPrefix + htmlBoxIdHash );
+                            return false;
                         })
                 );
 
@@ -134,12 +132,19 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
          * @param object id - htmlBox ID
          */
         preload : function( sourceElId, id ){
-            $('#'+id+'_btn_close').fadeIn();
-            $('#'+id+'_bg').fadeIn( 100, function(){
-                creo.htmlBox.setHtmlBoxPos(sourceElId, id, function(){
-                    $('#'+id).fadeIn();
+            //Preload htmlBox
+            $('#'+id+'_bg')
+                .height( $(window).height())
+                .fadeIn( 100, function(){
+                    $('#'+id+'_btn_close').fadeIn();
+                    creo.htmlBox.setHtmlBoxPos(sourceElId, id, function(){
+                        $('#'+id).fadeIn( function(){
+                            $('#'+id)
+                                .removeClass('creoHtmlBoxContentProgress');
+                            creo.htmlBox.show( sourceElId, id );
+                        });
+                    });
                 });
-            });
         },
 
 
@@ -152,11 +157,13 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
          */
         setHtmlBoxPos : function( sourceElId, id, callback ){
             $('#' + id)
-                .css( 'left', function(){
-                    return ( Math.floor(parseInt(sourceElId.width()) - parseInt( $('#' + id).width() ) )/2 );
-                });
+                .css( 'left', Math.floor(parseInt(sourceElId.width(),10) - parseInt( $('#' + id).width(),10 ) )/2 );
+
             creo.htmlBox.setCloseBtnPos(id);
-            calback.call( callback );
+
+            if( typeof callback === 'function' ){
+                callback.call();
+            }
         },
 
 
@@ -168,51 +175,64 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
         setCloseBtnPos : function( id ){
             //Create shorthands
             var conf = creo.htmlBox.conf;
-
-            $('#' + id + '_btn_close')
-                .css('left', parseInt( $('#' + id).position().left,10) + parseInt( $('#' + id).css('width'),10) + conf.btn.close.leftFix )
-                .css('top', parseInt( $('#' + id).position().top,10) + conf.btn.close.topFix)
+            
+            setTimeout( function() {
+                $('#' + id + '_btn_close')
+                    .css('left', parseInt( $('#' + id).position().left,10) + parseInt( $('#' + id).css('width'),10) + conf.btn.close.leftFix )
+                    .css('top', parseInt( $('#' + id).position().top,10) + conf.btn.close.topFix);
+            }, 10 );
         },
 
 
         /** 
          * Method will show creo.htmlBox
          * @method show
+         * @param object sourceElId - source element ID
          * @param object id - htmlBox ID
          */
-        show : function( id ){
-            return;
+        show : function( sourceElId, id ){
             //Create shorthands
             var conf = creo.htmlBox.conf;
+            $('#' + id)
+                .css( 
+                    {
+                        width : function(){
+                            var contentWidth = $(this)
+                                                    .find('.creoHtmlBoxContent > *')
+                                                    .map(function(){
+                                                       return $(this).width();
+                                                    }).get();
+                            var out = Math.floor( $(window).width() * 0.95 );
+                            if( !conf.iframeMode ){
+                                out = contentWidth < $(window).width() && contentWidth !== 0 ? contentWidth : out;
 
-                $('#' + id + '_bg')
-                    .height( id.height());
+                            }
+                            return conf.content.forceWidth ? conf.content.forceWidth : out;
+                        },
+                        height : function(){
+                            var contentHeight = $(this)
+                                                    .find('.creoHtmlBoxContent > *')
+                                                    .map(function(){
+                                                       return $(this).height();
+                                                    }).get();
+                            var out = Math.floor( $(window).height() * 0.95 ) - parseInt( $("#"+id).css('margin-top'),10);
+                            if( !conf.iframeMode ){
+                                out = contentHeight < $(window).height() && contentHeight !== 0 ? contentHeight : out;
+                            }
+                            return conf.content.forceHeight ? conf.content.forceHeight : out;
+                        },
+                        left : function(){
+                            return ( Math.floor(parseInt(sourceElId.width(),10) - parseInt( $('#' + id).width(),10 ) )/2 );
+                        }
+                    }
+                );
 
-                $('#' + id)
-                    .css( 'left', function(){
-                        return ( Math.floor(parseInt(id.width()) - parseInt( $('#' + id).width() ) )/2 );
-                    })
-                    .width( function(){
-                        return parseInt( $('#' + id + '_iframe').width() )
-                        + parseInt( $('#' + id).find('.creoHtmlBoxContent').css('margin-left'),10 )
-                        + parseInt( $('#' + id).find('.creoHtmlBoxContent').css('margin-right'),10 )
-                    });
-
-console.log(parseInt( $('#' + id + '_iframe').contents().find('body').width() ));
-
-                //creo.htmlBox.show( conf.htmlBoxIdPrefix + htmlBoxIdHash );
-
-
+            $('#' + id + '_iframe')
+                .css( 'height', parseInt( $('#' + id).height(),10) - parseInt( $("#"+id).css('margin-top'),10) )
+                .fadeIn();
+            creo.htmlBox.setHtmlBoxPos(sourceElId, id);
         },
 
-        /** 
-         * Method will update creo.htmlBox width
-         * @method updateWidth
-         * @param object source - source element from with width will be taken
-         */
-        updateWidth : function( source ){
-            $()
-        },
 
         /** 
          * Method will hide and remove creo.htmlBox
