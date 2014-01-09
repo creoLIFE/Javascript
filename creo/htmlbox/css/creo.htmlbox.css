@@ -1,0 +1,7 @@
+.creoHtmlBoxBg {background:#000; width:100%; height:100%; position:absolute; top:0; left:0; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; filter: alpha(opacity=80); -moz-opacity: 0.8; -khtml-opacity: 0.8; opacity: 0.8;}
+.creoHtmlBox {background:#fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.90); font:12px/15px tahoma, verdana, arial; position:fixed; margin:20px auto 0; overflow:hidden; -moz-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px; border-radius: 10px;}
+	.creoHtmlBoxBtnClose {position:fixed; top:-5px; right:-5px; width:16px; height:16px; display:block; background:#ccc; border:2px solid #ccc; font-family:arial; text-decoration:none; font-size:10px; font-weight:bold; -moz-border-radius: 8px; -webkit-border-radius: 8px; -khtml-border-radius: 8px; border-radius: 8px;}
+	.creoHtmlBoxBtnClose:hover {background:#000; color:#fff;}
+	.creoHtmlBoxBtnClose span {display:block; margin:2px 4px;}
+	.creoHtmlBoxContent {margin:10px; min-width:32px; min-height:32px; background:url(../i/preloader.gif) no-repeat center center;}
+		.creoHtmlBoxIframe {width:100%; height:90%; border:none;}

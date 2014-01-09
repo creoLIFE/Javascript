@@ -257,7 +257,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
              //creo.slider.conf = options;
             $.extend(true, creo.slider.conf, options);
 
-            //lunch gmaps
+            //lunch slider
             creo.slider.create( $(this), options );
         }
 	};
