@@ -14,7 +14,7 @@ if( typeof creo === 'undefined' ){
 }
 
 /**
- *  creoSlider
+ *  creo.slider
  */
 if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
 
@@ -26,7 +26,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
 		conf : {
 			thisId                   : '.creoSlider',
             repeat                   : true,
-            autoScrollInterval       : 10,
+            autoScrollInterval       : 30,
             fitWidth                 : true,
             pAutoScroll              : false,
             autoScrollStartEl        : 1,
@@ -108,57 +108,57 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                         })
                         .end()
                     .width( Math.floor(slideToPosition) )
-                    .height( Math.floor(slideMaxHeight) )
+                    .height( Math.floor(slideMaxHeight) );
+
+            $( conf.ids.menu )
+                //Set correct height for buttons
+                .find( conf.ids.menuEl )
+                    .height( function(){
+                        return $(this).parent().height();
+                    })
                     .end()
-                .children( conf.ids.menu )
-                    //Set correct height for buttons
-                    .find( conf.ids.menuEl )
-                        .height( function(){
-                            return $(this).parent().height();
-                        })
+                //Find and set active class for 1st button
+                .find( conf.ids.menuEl + ':first' )
+                    .parent()
+                        .addClass( conf.classes.active )
                         .end()
-                    //Find and set active class for 1st button
-                    .find( conf.ids.menuEl + ':first' )
-                        .parent()
-                            .addClass( conf.classes.active )
-                            .end()
-                        .end()
-                    //Attach click events to menu buttons
-                    .find( conf.ids.menuEl )
-                        .on( 'click', function(e,doScroll){
+                    .end()
+                //Attach click events to menu buttons
+                .find( conf.ids.menuEl )
+                    .on( 'click', function(e,doScroll){
 
-                            //Set neccessary classes for buttons
-                            $(this)
-                                .parent()
-                                    .siblings()
-                                        .removeClass( conf.classes.active )
-                                        .addClass( conf.classes.inActive )
-                                        .end()
-                                    .removeClass( conf.classes.inActive )
-                                    .addClass( conf.classes.active );
+                        //Set neccessary classes for buttons
+                        $(this)
+                            .parent()
+                                .siblings()
+                                    .removeClass( conf.classes.active )
+                                    .addClass( conf.classes.inActive )
+                                    .end()
+                                .removeClass( conf.classes.inActive )
+                                .addClass( conf.classes.active );
 
-                            //Define position to scroll
-                            var pos = $(this).parent().prevAll().length;
+                        //Define position to scroll
+                        var pos = $(this).parent().prevAll().length;
 
-                            //make animation
-                            $( conf.ids.slides )
-                                .stop()
-                                .animate(
-                                    {
-                                        marginLeft : -slidePositions[pos]
-                                    },
-                                    600,
-                                    'linear'
-                                );
-                           
-                            //Cancel autoscrolling under click on button
-                            if( !doScroll ){
-                                creo.slider.stopAutoScroll();
-                            } 
+                        //make animation
+                        $( conf.ids.slides )
+                            .stop()
+                            .animate(
+                                {
+                                    marginLeft : -slidePositions[pos]
+                                },
+                                600,
+                                'linear'
+                            );
+                       
+                        //Cancel autoscrolling under click on button
+                        if( !doScroll ){
+                            creo.slider.stopAutoScroll();
+                        } 
 
-                            //Prevent execute click
-                            e.preventDefault();
-                        });
+                        //Prevent execute click
+                        e.preventDefault();
+                    });
         },
 
 
@@ -251,7 +251,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
      * @method creoSlider
      * @param object options - configuration object for creo.slider
      */
-	jQuery.fn.creoSlider = function( options ){
+    jQuery.fn.creoSlider = function( options ){
         //check if given object exists
         if( $(this).length > 0 ){
              //creo.slider.conf = options;
@@ -260,5 +260,5 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
             //lunch slider
             creo.slider.create( $(this), options );
         }
-	};
+    };
 }
