@@ -222,6 +222,17 @@ if( typeof creo != 'undefined' ) {
         },
 
         /** 
+         * Method will set param
+         * @method setParam
+         * @param string $pName - parameter name
+         * @param string $pVal - parameter value
+         * @result string
+         */
+        setParam : function( pName, pVal  ){
+            creo.urlDecoder.varibles.params[pName] = pVal;
+        },
+
+        /** 
          * Method will get all param decoded from URL by its key
          * @method getParams
          * @result string
@@ -248,6 +259,17 @@ if( typeof creo != 'undefined' ) {
         getHash : function( pos ){
             var h = creo.urlDecoder.varibles.hashes;
             return typeof h[pos] !== 'undefined' ? h[pos] : '';
+        },
+
+        /** 
+         * Method will set hash
+         * @method setHash
+         * @param integer $pos - position
+         * @param string $val - value
+         * @result string
+         */
+        setHash : function( pos, val ){
+            creo.urlDecoder.varibles.hashes[pos] = val;
         },
 
         /** 
