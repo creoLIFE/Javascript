@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <title>creoLIFE urlDecoder</title>
+
+    <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../js/creo.urldecoder.js"></script>
+
+</head>
+<body style="width:100%; background:#ccc; margin:0; padding:0">
+
+    <input id="test1" style="width:500px">URL</input>
+    <div id="test2" style="width:500px">URL</div>
+
+    <script>
+        $(document).ready(function(){
+            var a = $.fn.creoUrlDecoder(document.location.href,false,function(){
+                $('#test1').val( this.getParam('aaa') );
+                $('#test2').text( this.getHash(0) );
+            });
+
+
+/*
+            $.fn.creoUrlDecoder('http://github.local/Javascript/creo/urldecoder/_demo/?aaa=1111<script>alert(1)<\/script>&bbb=asasasa#aaaaaa11111;asdasdasd',{},function(){
+                $('#test1').html( this.getParam('aaa') );
+            });
+*/
+        });
+    </script>
+
+</body>
+</html>

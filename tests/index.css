@@ -1,0 +1,2 @@
+#cTimerUp, #cTimerDown {border:1px solid #ccc; overflow:hidden;}
+#cTimerUp dd, #cTimerDown dd {display:block; float:left; margin:2px;}

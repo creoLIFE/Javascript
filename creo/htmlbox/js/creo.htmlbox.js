@@ -134,7 +134,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
         preload : function( sourceElId, id ){
             //Preload htmlBox
             $('#'+id+'_bg')
-                .height( $(window).height())
+                .height( $(sourceElId).height() )
                 .fadeIn( 100, function(){
                     $('#'+id+'_btn_close').fadeIn();
                     creo.htmlBox.setHtmlBoxPos(sourceElId, id, function(){
