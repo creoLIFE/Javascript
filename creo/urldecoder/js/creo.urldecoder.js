@@ -70,11 +70,11 @@ if( typeof creo != 'undefined' ) {
 
         /** 
          * Method will decode URL
-         * @method __construct
+         * @method decode
          * @param string $url - url string
          * @param function $callback - callback function
          */
-        __construct : function( url, callback ){
+        decode : function( url, callback ){
             var conf = creo.urlDecoder.conf;
             var a =  document.createElement('a');
 
@@ -141,20 +141,21 @@ if( typeof creo != 'undefined' ) {
          */
         __sanitizeVal : function( val ){
             val = encodeURIComponent(val);
-            return val
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/%253C/g, "")  // char <
-                .replace(/%3C/g, "")  // char <
-                .replace(/>/g, "&gt;")
-                .replace(/%253E/g, "")  //  char >
-                .replace(/%3E/g, "")  //  char >
-                .replace(/%2522/g, "")  //  char "
-                .replace(/%22/g, "")  //  char "
-                .replace(/%2F/g, "")  //  char /
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;")
-                .replace(/[^a-zA-Z0-9\-\+\%\&\@\#\/\%\?\=\~\_\|\!\:\,\.\;\(\)]/g, "");
+            return decodeURIComponent(
+            	val
+	                .replace(/&/g, "&amp;")
+	                .replace(/</g, "&lt;")
+	                .replace(/%253C/g, "")  // char <
+	                .replace(/%3C/g, "")  // char <
+	                .replace(/>/g, "&gt;")
+	                .replace(/%253E/g, "")  //  char >
+	                .replace(/%3E/g, "")  //  char >
+	                .replace(/%2522/g, "")  //  char "
+	                .replace(/%22/g, "")  //  char "
+	                .replace(/"/g, "&quot;")
+	                .replace(/'/g, "&#039;")
+	                .replace(/[^a-zA-Z0-9\-\+\%\&\@\#\/\%\?\=\~\_\|\!\:\,\.\;\(\)]/g, "")
+	        );
         },
 
         /** 
@@ -290,8 +291,9 @@ if( typeof creo != 'undefined' ) {
         }
 
     };
+}
 
-
+if( typeof jQuery != 'undefined' ) {
     /*
      * @method creourlDecoder
      * @param string $url - url to decode
@@ -305,7 +307,7 @@ if( typeof creo != 'undefined' ) {
         }
 
         //lunch avast web numbers
-        return creo.urlDecoder.__construct( url, callback );
+        return creo.urlDecoder.decode( url, callback );
     };
 
 }
