@@ -1,16 +1,13 @@
  /**
  * creo.urlDecoder - decodes full url and let user to get some part of it in easy way
  * @version 1.0
- * @copyright creoLIFE.pl 2006-2014
+ * @source https://github.com/creoLIFE/Javascript
  * @author Mirek Ratman
  * @namespace creo
  * @since 2014-04-09
  * @requires []
- */
-
- /*
-    Copyright (C) 2006-2014 creoLIFE.pl 
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * @copyright creoLIFE.pl 2006-2014
+	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
@@ -70,11 +67,11 @@ if( typeof creo != 'undefined' ) {
 
         /** 
          * Method will decode URL
-         * @method decode
+         * @method __init
          * @param string $url - url string
          * @param function $callback - callback function
          */
-        decode : function( url, callback ){
+        __init : function( url, callback ){
             var conf = creo.urlDecoder.conf;
             var a =  document.createElement('a');
 
@@ -157,6 +154,16 @@ if( typeof creo != 'undefined' ) {
 	                .replace(/[^a-zA-Z0-9\-\+\%\&\@\#\/\%\?\=\~\_\|\!\:\,\.\;\(\)]/g, "")
 	        );
         },
+
+	    decode : function( url, options, callback){
+	        //Extends basic options
+	        if( typeof options == 'object' ){
+	            creo.urlDecoder.__extend(creo.urlDecoder.conf, options);
+	        }
+
+	        //lunch avast web numbers
+	        return creo.urlDecoder.__init( url, callback );
+	    },
 
         /** 
          * Method will get source from decoded URL
@@ -307,7 +314,7 @@ if( typeof jQuery != 'undefined' ) {
         }
 
         //lunch avast web numbers
-        return creo.urlDecoder.decode( url, callback );
+        return creo.urlDecoder.__init( url, callback );
     };
 
 }
