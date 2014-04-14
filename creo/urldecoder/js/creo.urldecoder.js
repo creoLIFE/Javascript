@@ -38,17 +38,19 @@ if( typeof creo != 'undefined' ) {
          * @description Object with global varibles
          */
         varibles : {
-            source      : '',
-            protocol    : '',
-            host        : '',
-            post        : '',
-            query       : '',
-            params      : {},
-            file        : '',
-            hash        : '',
-            path        : '',
-            relative    : '',
-            segments    : '' 
+            source     		: '',
+            protocol    	: '',
+            host        	: '',
+            post        	: '',
+            query       	: '',
+            updatedQuery    : '',
+            params      	: {},
+            file        	: '',
+            hash        	: '',
+            hashs        	: {},
+            path        	: '',
+            relative    	: '',
+            segments    	: '' 
         },
 
 
@@ -229,7 +231,18 @@ if( typeof creo != 'undefined' ) {
          * @result string
          */
         setParam : function( pName, pVal  ){
-            creo.urlDecoder.varibles.params[pName] = pVal;
+            creo.urlDecoder.varibles.params[pName] = creo.urlDecoder.__sanitizeVal(pVal);
+        	var query = (function(){
+                    var ret = '?', size = 0, key;
+				    for (key in creo.urlDecoder.varibles.params) {
+				        if( creo.urlDecoder.varibles.params.hasOwnProperty(key) ){
+				        	ret += (ret !== '?' ? '&' : '') + key + '=' + creo.urlDecoder.varibles.params[key];
+				        }
+				    }
+                    return ret;
+                })();
+
+            creo.urlDecoder.varibles.query = query;
         },
 
         /** 

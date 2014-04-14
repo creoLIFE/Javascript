@@ -30,6 +30,13 @@
 
             console.log(parsedJs);
 
+            $.fn.creoUrlDecoder(document.location.href,false,function(){
+				this.setParam('aaaaa', '1111111111111111111111' );
+				this.setParam('some_param_name_from_url', '2222222222222222' );
+                console.log(this.getQuery());
+            });
+
+
         });
     </script>
 
