@@ -282,7 +282,7 @@ if( typeof creo != 'undefined' ) {
          * @result string
          */
         setHash : function( pos, val ){
-            creo.urlDecoder.varibles.hashes[pos] = val;
+            creo.urlDecoder.varibles.hashes[pos] = creo.urlDecoder.__sanitizeVal(val);
         },
 
         /** 
