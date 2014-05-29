@@ -57,7 +57,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method extend option library
          * @method __extend
-         * @result array
+         * @result [array]
          */
         __extend : function(){
             for(var i=1; i<arguments.length; i++)
@@ -70,8 +70,8 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will decode URL
          * @method __init
-         * @param string $url - url string
-         * @param function $callback - callback function
+         * @param [string] $url - url string
+         * @param [function] $callback - callback function
          */
         __init : function( url, callback ){
             var conf = creo.urlDecoder.conf;
@@ -135,8 +135,8 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will sanitize value from some unusual use
          * @method __sanitizeVal
-         * @param string $val - value to sanitize
-         * @result string
+         * @param [string] $val - value to sanitize
+         * @result [string]
          */
         __sanitizeVal : function( val ){
             val = encodeURIComponent(val);
@@ -170,7 +170,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get source from decoded URL
          * @method getSource
-         * @result string
+         * @result [string]
          */
         getSource : function(){
             return creo.urlDecoder.varibles.source;
@@ -179,7 +179,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get protocol from decoded URL
          * @method getProtocol
-         * @result string
+         * @result [string]
          */
         getProtocol : function(){
             return creo.urlDecoder.varibles.protocol;
@@ -188,7 +188,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get host from decoded URL
          * @method getHost
-         * @result string
+         * @result [string]
          */
         getHost : function(){
             return creo.urlDecoder.varibles.host;
@@ -197,7 +197,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get port from decoded URL
          * @method getPort
-         * @result string
+         * @result [string]
          */
         getPort : function(){
             return creo.urlDecoder.varibles.port;
@@ -206,7 +206,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get query from decoded URL
          * @method getQuery
-         * @result string
+         * @result [string]
          */
         getQuery : function(){
             return creo.urlDecoder.varibles.query;
@@ -215,20 +215,27 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get param decoded from URL by its key
          * @method getParam
-         * @param string $pName - parameter name
-         * @result string
+         * @param [string] $pName - parameter name
+         * @param [RegExp] $reg - regular expression to verify pName string
+         * @result [mixed]
          */
-        getParam : function( pName  ){
+        getParam : function( pName, reg ){
             var p = creo.urlDecoder.varibles.params;
-            return typeof p[pName] !== 'undefined' ? p[pName] : '';
+            var patt = new RegExp(reg);
+            if( typeof p[pName] !== 'undefined' ){
+                return patt.test(p[pName]) ? p[pName] : null;
+            }
+            else{
+                return null;
+            }
         },
 
         /** 
          * Method will set param
          * @method setParam
-         * @param string $pName - parameter name
-         * @param string $pVal - parameter value
-         * @result string
+         * @param [string] $pName - parameter name
+         * @param [string] $pVal - parameter value
+         * @result [string]
          */
         setParam : function( pName, pVal  ){
             creo.urlDecoder.varibles.params[pName] = creo.urlDecoder.__sanitizeVal(pVal);
@@ -248,7 +255,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get all param decoded from URL by its key
          * @method getParams
-         * @result string
+         * @result [string]
          */
         getParams : function(){
             return creo.urlDecoder.varibles.params;
@@ -257,7 +264,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get file from decoded URL
          * @method getFile
-         * @result string
+         * @result [string]
          */
         getFile : function(){
             return creo.urlDecoder.varibles.file;
@@ -266,20 +273,20 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get hash decoded from URL by its position
          * @method getHash
-         * @param integer $pos - position
-         * @result string
+         * @param [integer] $pos - position
+         * @result [string]
          */
         getHash : function( pos ){
             var h = creo.urlDecoder.varibles.hashes;
-            return typeof h[pos] !== 'undefined' ? h[pos] : '';
+            return typeof h[pos] !== 'undefined' ? h[pos] : null;
         },
 
         /** 
          * Method will set hash
          * @method setHash
-         * @param integer $pos - position
-         * @param string $val - value
-         * @result string
+         * @param [integer] $pos - position
+         * @param [string] $val - value
+         * @result [string]
          */
         setHash : function( pos, val ){
             creo.urlDecoder.varibles.hashes[pos] = creo.urlDecoder.__sanitizeVal(val);
@@ -288,7 +295,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get all hashes decoded from URL by its key
          * @method getHashes
-         * @result string
+         * @result [string]
          */
         getHashes : function(){
             return creo.urlDecoder.varibles.hashes;
@@ -297,7 +304,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get path from decoded URL
          * @method getPath
-         * @result string
+         * @result [string]
          */
         getPath : function(){
             return creo.urlDecoder.varibles.path;
@@ -306,7 +313,7 @@ if( typeof creo != 'undefined' ) {
         /** 
          * Method will get relative from decoded URL
          * @method getRelative
-         * @result string
+         * @result [string]
          */
         getRelative : function(){
             return creo.urlDecoder.varibles.relative;
@@ -316,17 +323,17 @@ if( typeof creo != 'undefined' ) {
          * Method will get segment decoded from URL by its position
          * @method getSegment
          * @param integer $pos - position
-         * @result string
+         * @result [string]
          */
         getSegment : function( pos ){
             var s = creo.urlDecoder.varibles.segments;
-            return typeof s[pos] !== 'undefined' ? s[pos] : '';
+            return typeof s[pos] !== 'undefined' ? s[pos] : null;
         },
 
         /** 
          * Method will get segments from decoded URL
          * @method getSegments
-         * @result string
+         * @result [string]
          */
         getSegments : function(){
             return creo.urlDecoder.varibles.segments;
@@ -338,9 +345,9 @@ if( typeof creo != 'undefined' ) {
 if( typeof jQuery != 'undefined' ) {
     /*
      * @method creourlDecoder
-     * @param string $url - url to decode
-     * @param object $options - extra options to set/change
-     * @param callback $callback - callback
+     * @param [string] $url - url to decode
+     * @param [object] $options - extra options to set/change
+     * @param [function] $callback - callback
      */
     jQuery.fn.creoUrlDecoder = function( url, options, callback){
         //Extends basic options
