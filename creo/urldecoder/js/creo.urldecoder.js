@@ -1,6 +1,6 @@
  /**
  * creo.urlDecoder - decodes full url and let user to get some part of it in easy way
- * @version 1.0
+ * @version 1.1
  * @source https://github.com/creoLIFE/Javascript
  * @author Mirek Ratman
  * @namespace creo
