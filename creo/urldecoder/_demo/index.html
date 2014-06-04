@@ -17,11 +17,11 @@
 
     <script>
         $(document).ready(function(){
-            var parsed = $.fn.creoUrlDecoder(document.location.href,false,function(){
+            var urlClass = $.fn.creoUrlDecoder(document.location.href,false,function(){
                 $('#test1').val( this.getParam('some_param_name_from_url'));
             });
 
-            console.log(parsed);
+            console.log(urlClass);
 
 
             var parsedJs = creo.urlDecoder.decode(document.location.href,function(){

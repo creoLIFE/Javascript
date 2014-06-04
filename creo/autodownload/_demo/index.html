@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <title>creoLIFE urlDecoder</title>
+
+    <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../urldecoder/js/creo.urldecoder.js"></script>
+    <script type="text/javascript" src="../js/creo.autodownload.js"></script>
+
+</head>
+<body style="width:100%; background:#ccc; margin:0; padding:0">
+
+    <div style="width:1000px; margin:100px auto">
+        <input id="test1" style="width:500px;"></input>
+        <div id="test2" style="width:500px">URL</div>
+        <div id="test2" style="margin-top:200px; width:500px">Stopped</div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            var dwn = $.fn.creoAutoDownload('http://files.avast.com/iavs9x/avast_free_antivirus_setup.exe?aaa=1111&bbb=22222');
+        });
+    </script>
+
+</body>
+</html>

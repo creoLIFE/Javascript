@@ -1,6 +1,6 @@
  /**
  * creo.urlDecoder - decodes full url and let user to get some part of it in easy way
- * @version 1.1
+ * @version 1.2
  * @source https://github.com/creoLIFE/Javascript
  * @author Mirek Ratman
  * @namespace creo
@@ -12,7 +12,7 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-//Set main creo class if not exists.
+//Set main creo object if not exists.
 if( typeof creo === 'undefined' ){
     var creo = {};
 }
@@ -110,6 +110,7 @@ if( typeof creo != 'undefined' ) {
                                 return ret;
                             })(),
                 path        : creo.urlDecoder.__sanitizeVal( a.pathname.replace(/^([^\/])/,'/$1') ),
+                filePath    : creo.urlDecoder.__sanitizeVal( a.protocol.replace(':','') ) + '://' + creo.urlDecoder.__sanitizeVal( a.hostname ) + creo.urlDecoder.__sanitizeVal( a.pathname.replace(/^([^\/])/,'/$1') ),
                 relative    : creo.urlDecoder.__sanitizeVal( (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [''])[1] ),
                 segments    : (function(){
                                 var ret = {},
@@ -129,7 +130,7 @@ if( typeof creo != 'undefined' ) {
             }
 
             //return parsed object
-            return creo.urlDecoder.varibles;
+            return creo.urlDecoder;
         },
 
         /** 
@@ -271,6 +272,15 @@ if( typeof creo != 'undefined' ) {
         },
 
         /** 
+         * Method will get full path to the file including filename
+         * @method getFilePath
+         * @result [string]
+         */
+        getFilePath : function(){
+            return creo.urlDecoder.varibles.filePath;
+        },
+
+        /** 
          * Method will get hash decoded from URL by its position
          * @method getHash
          * @param [integer] $pos - position
@@ -280,6 +290,7 @@ if( typeof creo != 'undefined' ) {
             var h = creo.urlDecoder.varibles.hashes;
             return typeof h[pos] !== 'undefined' ? h[pos] : null;
         },
+
 
         /** 
          * Method will set hash
