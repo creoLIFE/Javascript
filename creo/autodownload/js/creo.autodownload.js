@@ -1,6 +1,6 @@
  /**
  * creo.autoDownload - scripts helps to handle and execute file download without special headers
- * @version 1.0
+ * @version 1.0.1
  * @source https://github.com/creoLIFE/Javascript
  * @author Mirek Ratman
  * @namespace creo
@@ -25,25 +25,23 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
     creo.autoDownload = creo.prototype = {
 
         /*
-         * @description Object with global params for best antyvirus comparison
+         * @description Object with global params
          */
         conf : {
-            form :{
-                method : 'GET'
+            iframe : {
+                id : 'creoIframeDownload'
             },
-            delay : 2000,
-            progress : {
-                domId   : '#creoProgressBar',
-                type    : 'text',
-                messages : {
-                    active      : "Please wait...",
-                    inactive    : ""
-                },
-                classes : {
-                    active      : "creoProgressBarActive"
-                }
+            form :{
+                method  : 'GET'
+            },
+            progressDelay : 5000
+        },
 
-            }
+        /*
+         * @description Object with global varibles
+         */
+        varibles : {
+            params : ''
         },
 
 
@@ -64,89 +62,70 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
          * Method will decode URL
          * @method __init
          * @param [string] $url - url string
-         * @param [function] $callback - callback function
          */
         __init : function( url, callback ){
-            //progress update
-            creo.autoDownload.updateProgress('active', function(){
+            var conf = creo.autoDownload.conf;
+            var varibles = creo.autoDownload.varibles;
+            var iframe =  $('<iframe>');
+            varibles.params = creo.urlDecoder.__init( url );
 
-                var conf = creo.autoDownload.conf;
-                var iframe =  $('<iframe>');
-                var iframeId = 'iframe' + Math.floor((1 + Math.random()) * 10000000000000000);
-                var form =  $('<form>');
-                var params = creo.urlDecoder.__init( url );
+            //Run
+            iframe
+                .hide()
+                .css('width',0)
+                .css('height',0)
+                .attr('id', conf.iframe.id )
+                .appendTo('body');
 
-                $.each( params.getParams(), function(key,val){
-                    form.append( 
-                        $('<input>')
-                            .attr('type','hidden')
-                            .attr('name',key)
-                            .attr('value',val)
-                    );
-                });
-
-                iframe
-                    .hide()
-                    .attr('id', iframeId )
-                    .appendTo('body');
-                form
-                    .attr('action', params.getFilePath() )
-                    .attr('method', conf.form.method )
-                    .delay( conf.delay )
-                    .appendTo('#' + iframeId)
-                        .submit()
-                        .find('#' + iframeId, function(){
-                            $(this)
-                                .remove();
-                            //execute callback
-                            if( typeof callback == 'function' ){
-                                callback.call();
-                            }
-                        });
-                //Update status
-                creo.autoDownload.updateProgress('inactive');
-
-            });
+            return creo.autoDownload;
         },
 
         /** 
-         * Method will update DOM element responsible for progress 
-         * @method updateProgress
-         * @param [string] $status - status (active|inactive)
+         * Method will decode URL
+         * @method __init
+         * @param [string] $url - url string
          * @param [function] $callback - callback function
          */
-        updateProgress : function( status, callback ){
+        processDownload : function( callback ){
             var conf = creo.autoDownload.conf;
-            var el = $(conf.progress.domId );
+            var varibles = creo.autoDownload.varibles;
+            var form =  $('<form>');
+            var formId = 'form' + Math.floor((1 + Math.random()) * 10000000000000000);
             
-            switch( conf.progress.type ){    
-                case 'text':
-                    switch( status ){
-                        case 'active':
-                            el.text( conf.progress.messages.active );
-                        break;
-                        case 'inactive':
-                            el.text( conf.progress.messages.inactive );
-                        break;
-                    }
-                break;
-                case 'class':
-                    switch( status ){
-                        case 'active':
-                            el.addClass( conf.progress.messages.active );
-                        break;
-                        case 'inactive':
-                            el.removeClass( conf.progress.messages.active );
-                        break;
-                    }
-                break;
-            }
+            //Define form
+            form
+                .attr('id', formId )
+                .attr('action', varibles.params.getFilePath() )
+                .attr('method', conf.form.method );
 
-            if( typeof callback == 'function' ){
-                callback.call();
-            }
+            $.each( varibles.params.getParams(), function(key,val){
+                form.append( 
+                    $('<input>')
+                        .attr('type','hidden')
+                        .attr('name',key)
+                        .attr('value',val)
+                );
+            });
+
+            //Process download
+            $('#' + conf.iframe.id)
+                .contents()
+                    .find( "body" )
+                        .append( form )
+                            .find( '#' + formId )
+                                .submit()
+                                .delay(1, function(){
+                                    setTimeout(
+                                        function(){
+                                            if( typeof callback == 'function' ){
+                                                callback.call();
+                                            }
+                                            return;
+                                        },
+                                        conf.progressDelay
+                                    );
+                                });
         }
-
     };
 }
 
