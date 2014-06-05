@@ -14,15 +14,15 @@
     <div style="width:1000px; margin:100px auto">
         <input id="url" style="width:500px;" value="http://bits.ff.avast.com/rd/avast_free_antivirus_setup_yW70TfhQ.exe?test1=1&test2=2"></input>
         <input type="button"id="send" value="Download"></input>
-        Status <div id="test2" style="width:500px">Stopped</div>
+        <div id="test2" style="width:500px"></div>
     </div>
 
     <script>
         $(document).ready(function(){
-            
             $('#send').on('click',function(){
+                $('#test2').text('Loading. Please wait...');
                 var dwn = $.fn.creoAutoDownload( $('#url').val(), null, function(){
-                    console.log(Math.random(10000000));
+                    $('#test2').text('Done');
                 });
             });
             
