@@ -21,7 +21,8 @@
         $(document).ready(function(){
             $('#send').on('click',function(){
                 $('#test2').text('Loading. Please wait...');
-                var dwn = $.fn.creoAutoDownload( $('#url').val(), null, function(){
+                //var dwn = $.fn.creoAutoDownload( $('#url').val(), null, function(){
+                var dwn = creo.autoDownload.__init( $('#url').val(), function(){
                     $('#test2').text('Done');
                 });
             });

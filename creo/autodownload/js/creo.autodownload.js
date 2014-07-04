@@ -58,15 +58,13 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
          */
         __init : function( url, callback ){
             var conf = creo.autoDownload.conf;
-            var varibles = creo.autoDownload.varibles;
             var iframe =  $('<iframe>');
             var form =  $('<form>');
             var formId = 'form' + Math.floor((1 + Math.random()) * 10000000000000000);
             var params = creo.urlDecoder.__init( url );
 
-            //Run
-
             //Define form
+            /*
             form
                 .attr('id', formId )
                 .attr('action', params.getFilePath() )
@@ -81,6 +79,7 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
                         .attr('value',val)
                 );
             });
+            */
 
             //Define iframe
             iframe
@@ -89,41 +88,97 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
                     'width':0,
                     'height':0
                 })
-                .attr('id', conf.iframe.id )
-                .attr('src', url)
-                .on('load',function(){
-                    if( typeof callback == 'function' ){
-                        callback.call();
-                    }
-                });
+                .attr('id', conf.iframe.id );
+
+
+            if( /firefox/.test(navigator.userAgent.toLowerCase()) ){
+                iframe
+                    .attr('src', params.getFilePath() )
+                    .on('load',function(){
+                        if( typeof callback == 'function' ){
+                            callback.call();
+                        }
+                    })
+                    .appendTo('body');
+            }
+            else if( /msie/.test(navigator.userAgent.toLowerCase()) ){
+                $('body')
+                    .on('appened', 'iframe', function(event){
+                        if( typeof callback == 'function' ){
+                            callback.call();
+                        }
+                    });
+
+                iframe
+                    .attr('src', params.getFilePath() )
+                    .appendTo('body')
+                    .trigger("appened");​
+
+                    /*
+                    .find( "#" + formId )
+                        .on('submit',function(){
+                            if( typeof callback == 'function' ){
+                                callback.call();
+                            }
+                        })
+                        .submit();
+                    */
+                    /*
+                    $.when( $('#' + conf.iframe.id ).remove())
+                        .then(
+                        );
+*/
+/*
+                        .delay(1000, function(){
+                            if( typeof callback == 'function' ){
+                                callback.call();
+                            }
+                        })
+*/
+            }
+            else{
+                /*
+                iframe
+                    .on('load',function(){
+                        if( typeof callback == 'function' ){
+                            callback.call();
+                        }
+                    })
+                    .append( form )
+                    .appendTo('body')
+                    .find( "#" + formId )
+                        .submit();
+                */
+            }
 
             //Commit iframe to DOM
+            /*
             $.when($('#' + conf.iframe.id ).remove())
                 .then(
-                    iframe
-                        .append( form )
-                        .appendTo('body')
                 );
+ */
         }
     };
-}
 
-if( typeof jQuery != 'undefined' ) {
-    /*
-     * @method creoAutoDownload
-     * @param [string] $url - url to decode
-     * @param [object] $options - extra options to set/change
-     * @param [function] $callback - callback
-     */
-    jQuery.fn.creoAutoDownload = function( url, options, callback){
-        //Extends basic options
-        if( typeof options == 'object' ){
-            creo.autoDownload.__extend(creo.autoDownload.conf, options);
-        }
+    if( typeof jQuery != 'undefined' ) {
+        /*
+         * @method creoAutoDownload
+         * @param [string] $url - url to decode
+         * @param [object] $options - extra options to set/change
+         * @param [function] $callback - callback
+         */
+        jQuery.fn.creoAutoDownload = function( url, options, callback){
+            //Extends basic options
+            if( typeof options == 'object' ){
+                creo.autoDownload.__extend(creo.autoDownload.conf, options);
+            }
 
-        //lunch avast web numbers
-        return creo.autoDownload.__init( url, callback );
-    };
+            //lunch avast web numbers
+            return creo.autoDownload.__init( url, callback );
+        };
+
+    }
+
 
 }
 
