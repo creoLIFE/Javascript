@@ -103,8 +103,8 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
             }
             else if( /msie/.test(navigator.userAgent.toLowerCase()) ){
                 $('body')
-                    .on('appened', 'iframe', function(event){
-                        if( typeof callback == 'function' ){
+                    .on('append', 'iframe', function(event){
+                        if( typeof callback === 'function' ){
                             callback.call();
                         }
                     });
@@ -112,8 +112,7 @@ if( typeof creo != 'undefined' && typeof jQuery != 'undefined' && typeof creo.ur
                 iframe
                     .attr('src', params.getFilePath() )
                     .appendTo('body')
-                    .trigger("appened");​
-
+                        .trigger("appened");​
                     /*
                     .find( "#" + formId )
                         .on('submit',function(){
