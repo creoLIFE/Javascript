@@ -46,9 +46,8 @@ if( typeof creo != 'undefined' ) {
         /*
          * Method will calculate difference between given timestamp and current computer timestamp,
          * create a output object years, months, days, hours, minutes and seconds with continous (each 1 second) callback
-         * @method timeCounter
-         * @param strng $timestamp - timestamp of begining or end time for counter
-         * @param strng $callback - callback which contain time object (values)
+         * @param [string] $timestamp - timestamp of begining or end time for counter
+         * @param [string] $callback - callback which contain time object (values)
          */
         timeCounter : function( timestamp, callback  ){
             //Create shorthands
@@ -159,8 +158,7 @@ if( typeof creo != 'undefined' ) {
 
         /*
          * Method will check if given value is integer value
-         * @method isInt
-         * @param string $n - given number
+         * @param [string] $n - given number
          * @return boolean
          */
         isInt : function( n ){
@@ -170,9 +168,8 @@ if( typeof creo != 'undefined' ) {
 
         /*
          * Method will calculate month difference
-         * @method getMonthDiff
-         * @param date $d1 - first date
-         * @param date $d2 - second date
+         * @param [date] $d1 - first date
+         * @param [date] $d2 - second date
          * @return integer
          */
         getMonthDiff : function(d1, d2) {
@@ -188,9 +185,8 @@ if( typeof creo != 'undefined' ) {
 
         /*
          * Method will calculate year difference
-         * @method getYearDiff
-         * @param date $d1 - first date
-         * @param date $d2 - second date
+         * @param [date] $d1 - first date
+         * @param [date] $d2 - second date
          * @return integer
          */
         getYearDiff : function(d1, d2) {
@@ -213,8 +209,8 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
 
     /** 
      * Method will create jQuery shorthand method
-     * @method creoSlider
-     * @param object options - configuration object for creo.slider
+     * @param [int] timestamp
+     * @param [object] options - configuration object for creo.slider
      */
     jQuery.fn.creoCounter = function( timestamp, options ){
         //check if given object exists
