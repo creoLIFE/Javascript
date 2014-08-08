@@ -5,6 +5,7 @@
  * @author Mirek Ratman
  * @namespace creo
  * @since 2013-02-18
+ * @update 2014-08-08
  * @requires [jQuery if it will be used as a jQuery plugin]
  */
 
@@ -71,13 +72,14 @@ if( typeof creo != 'undefined' ) {
                         }
 
                         var countdown = true;
+                        var diff = 0;
                         //create timestamp difference
                         if( cts - ts < 0  ){
-                            var diff = (ts - cts);
+                            diff = (ts - cts);
                         }
                         else{
                             countdown = false;
-                            var diff = (cts - ts);
+                            diff = (cts - ts);
                         }
 
 
@@ -250,7 +252,7 @@ if( typeof jQuery != 'undefined' && typeof creo != 'undefined' ) {
                         .text( el.seconds )
                         .end()
                     .find( conf.ids.miliseconds )
-                        .text( el.miliseconds )
+                        .text( el.miliseconds );
             });
         }
     };
