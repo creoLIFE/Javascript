@@ -1,3 +1,7 @@
+// ==ClosureCompiler==
+// @compilation_level ADVANCED_OPTIMIZATIONS
+// @output_file_name creo.normalize.min.js
+// ==/ClosureCompiler==
 /**
  * creo.normalize - plugin provide style normalization functionality. You can easilly normalize many css parameters.
  * @version 1.0
@@ -15,15 +19,14 @@ if( typeof creo !== 'undefined' ) {
 
 	creo.normalize = creo.prototype = {
 
-        /* 
+        /**
          * method will find the element with max style (param) and set this param to any other boxes
-         * @method do
-         * @param object $list - list of tags
-         * @param string $param - parameter to normalize (example, height, width, etc - not all css styles are supported now)
-         * @param string $fix - number that can be added or subtracted from final value
-         * @param integer $timeout - timeout (sometimes elements need to be loaded)
-         */
-        do : function( list, param, fix, timeout ){
+         * @param [object] $list - list of tags
+         * @param [string] $param - parameter to normalize (example, height, width, etc - not all css styles are supported now)
+         * @param [string] $fix - number that can be added or subtracted from final value
+         * @param [integer] $timeout - timeout (sometimes elements need to be loaded)
+         **/
+        doNormalize : function( list, param, fix, timeout ){
             if( typeof list === 'undefined' || typeof param === 'undefined' ){
                 return false;
             }
@@ -32,14 +35,12 @@ if( typeof creo !== 'undefined' ) {
                 fix = 0;
             }
 
-            // Define local function
-            /* 
+            /**
              * function will find and get tallest tag height
-             * @method getParams
-             * @param object $list - list of elements
-             * @param string $param - list of elements
-             * @param callback $callback - callback
-             */
+             * @param [object] $list - list of elements
+             * @param [string] $param - list of elements
+             * @param [callback] $callback - callback
+             **/
             function getElParams( list, param, callback ){
                 if( $(list).find('img').length > 0 ){
                     avast.core.imagesLoaded( list, function(){
@@ -94,28 +95,23 @@ if( typeof creo !== 'undefined' ) {
                     });
                 }
             }
-        },
-
+        }
 	};
 }
 
 
-/**
- *  creo.counter
- */
 if( typeof jQuery !== 'undefined' && typeof creo !== 'undefined' ) {
 
     /** 
      * Method will create jQuery shorthand method
-     * @method creoNormalize
-     * @param [string,array] $param - parameter to normalize (example, height, width, etc - not all css styles are supported now)
-     * @param string $fix - number that can be added or subtracted from final value
-     * @param integer $timeout - timeout (sometimes elements need to be loaded)
-     */
+     * @param [array] $param - parameter to normalize (example, height, width, etc - not all css styles are supported now)
+     * @param [string] $fix - number that can be added or subtracted from final value
+     * @param [integer] $timeout - timeout (sometimes elements need to be loaded)
+     **/
     jQuery.fn.creoNormalize = function( param, fix, timeout ){
         //check if given object exists
         if( this.length > 0 ){
-            creo.normalize.do( this, param, fix, timeout );
+            creo.normalize.doNormalize( this, param, fix, timeout );
         }
     };
 }
